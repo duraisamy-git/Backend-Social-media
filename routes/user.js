@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const User = require("../Models/User");
 const Post = require("../Models/Post");
-// const { body, validationResult } = require('express-validator');
+
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const JWTSEC= "abcdefg";
@@ -40,7 +40,7 @@ router.post("/login", async (req, res) => {
             const result = await bcrypt.compare(req.body.password, user.password);
             if(result){
                 const token = jwt.sign({ id:user._id },"JWTSEC");
-                return res.json({msg:"Login Succesfully"});
+                return res.json(token);
             } else {
                 return res.json({ msg: "Wrong password" });
             }
